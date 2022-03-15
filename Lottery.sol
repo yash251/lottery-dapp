@@ -22,24 +22,24 @@ contract Lottery{
     }
 
     function random() internal view returns(uint){
-       return uint(keccak256(abi.encodePacked(block.difficulty, block.timestamp, players.length)));
+       return uint(keccak256(abi.encodePacked(block.difficulty, block.timestamp, players.length)));  // generating random number
     }
 
 
     function pickWinner() public{
 
-        require(msg.sender == manager);
+        require(msg.sender == manager);  // winner can only be called by the manager 
         require (players.length >= 3);
 
         uint r = random();
         address payable winner;
 
 
-        uint index = r % players.length;
+        uint index = r % players.length;  // getting winner's index
 
-        winner = players[index];
+        winner = players[index];  // address of the winner
 
-        winner.transfer(getBalance());
+        winner.transfer(getBalance());  // amount from contract is transferred to winner's address
 
 
         players = new address payable[](0);  // resetting the array once a round is completed
